@@ -15,8 +15,6 @@
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
-    </properties>
-    <properties>
         <sonar.projectKey>DennisVanEngelen_panonlineback3</sonar.projectKey>
         <sonar.organization>dennisvanengelen</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
