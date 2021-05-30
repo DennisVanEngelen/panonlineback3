@@ -79,6 +79,7 @@ public class UserDAL implements IUser
         entityManager = entityManagerFactory.createEntityManager();
         try
         {
+
             entityTransaction = entityManager.getTransaction();
             entityTransaction.begin();
             entityManager.persist(new UserDataModel(userDTO));
