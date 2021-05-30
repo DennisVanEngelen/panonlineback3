@@ -6,9 +6,13 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Entity @Getter
 @Setter
+@Table(name = "User")
 public class UserDataModel implements Serializable
 {
 
@@ -26,8 +30,14 @@ public class UserDataModel implements Serializable
         @Column(unique = true, nullable = false)
         private String email_address;
 
-//        @OneToMany(mappedBy = "GameStatistics")
-//        private List<GameStatisticsDataModel> statistics = new ArrayList<GameStatisticsDataModel>();
+        @ManyToMany(cascade = {CascadeType.ALL})
+        @JoinTable(
+                name = "User_GamesPlayed",
+                joinColumns = {@JoinColumn(name = "user_id")},
+                inverseJoinColumns = { @JoinColumn(name = "statistics_id")}
+        )
+        private Set<GameStatisticsDataModel> gamesPlayed = new HashSet<>();
+
 
         public UserDataModel() { }
 

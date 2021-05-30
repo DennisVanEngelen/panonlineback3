@@ -15,5 +15,6 @@ public class Player
 {
     PlayerClass playerClass;
     List<PlayerCard> hand;
+    User playerUser;
 
 }
