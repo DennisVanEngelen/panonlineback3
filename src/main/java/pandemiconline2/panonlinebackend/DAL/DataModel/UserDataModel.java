@@ -38,7 +38,6 @@ public class UserDataModel implements Serializable
         )
         private Set<GameStatisticsDataModel> gamesPlayed = new HashSet<>();
 
-
         public UserDataModel() { }
 
         public UserDataModel(UserDTO user)

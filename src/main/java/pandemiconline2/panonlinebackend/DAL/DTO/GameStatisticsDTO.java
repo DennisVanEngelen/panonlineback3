@@ -1,5 +1,7 @@
 package pandemiconline2.panonlinebackend.DAL.DTO;
 
+import lombok.Getter;
+import lombok.Setter;
 import pandemiconline2.panonlinebackend.DAL.DataModel.GameStatisticsDataModel;
 import pandemiconline2.panonlinebackend.DAL.DataModel.UserDataModel;
 import pandemiconline2.panonlinebackend.Logic.Models.GameStatistics;
@@ -8,7 +10,8 @@ import pandemiconline2.panonlinebackend.Logic.Models.User;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-
+@Getter
+@Setter
 public class GameStatisticsDTO
 {
     private long ID;

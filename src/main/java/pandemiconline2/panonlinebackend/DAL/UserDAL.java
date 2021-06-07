@@ -3,16 +3,20 @@ package pandemiconline2.panonlinebackend.DAL;
 import pandemiconline2.panonlinebackend.DAL.DTO.UserDTO;
 import pandemiconline2.panonlinebackend.DAL.DataModel.UserDataModel;
 import pandemiconline2.panonlinebackend.DAL.Interface.IUser;
+import pandemiconline2.panonlinebackend.DAL.Interface.IUserContainer;
+import pandemiconline2.panonlinebackend.Logic.Models.User;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
-public class UserDAL implements IUser
+public class UserDAL implements IUser, IUserContainer
 {
-    static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("playcatan-back-end");
+    static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("PandemicOnline");
     EntityTransaction entityTransaction;
     private EntityManager entityManager;
 
@@ -34,6 +38,8 @@ public class UserDAL implements IUser
 
         try
         {
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
             return new UserDTO(entityManager.createQuery(query).getSingleResult());
         }
         catch (NoResultException ex)
@@ -47,17 +53,15 @@ public class UserDAL implements IUser
             {
                 entityManager.close();
             }
+            entityTransaction = null;
         }
     }
     public UserDTO GetUser(long userID){
         entityManager  = entityManagerFactory.createEntityManager();
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<UserDataModel> query = builder.createQuery(UserDataModel.class);
-        Root<UserDataModel> root = query.from(UserDataModel.class);
-
 
         try
         {
+
            return new UserDTO(entityManager.find(UserDataModel.class, userID));
         }
         catch (NoResultException ex)
@@ -98,5 +102,68 @@ public class UserDAL implements IUser
             entityTransaction = null;
         }
     }
+
+    public void UpdateUser(UserDTO userDTO)
+    {
+        entityManager  = entityManagerFactory.createEntityManager();
+        try
+        {
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            UserDataModel user = entityManager.find(UserDataModel.class, userDTO.getId());
+            if(user.getGamesPlayed() != null)
+            {
+                user.getGamesPlayed().clear();
+            }
+            user = new UserDataModel(userDTO);
+            entityManager.merge(user);
+            entityTransaction.commit();
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            entityTransaction.rollback();
+        }
+        finally
+        {
+            if(entityManager.isOpen())
+            {
+                entityManager.close();
+            }
+            entityTransaction = null;
+        }
+    }
+    public void DeleteUser(long userID){
+
+        entityManager = entityManagerFactory.createEntityManager();
+        try
+        {
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            UserDataModel user = entityManager.find(UserDataModel.class,userID);
+            entityManager.remove(user);
+            entityTransaction.commit();
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            entityTransaction.rollback();
+        }
+        finally
+        {
+            if(entityManager.isOpen())
+            {
+                entityManager.close();
+            }
+            entityTransaction = null;
+        }
+    }
+
+    public List<UserDTO> GetAllUsers(){
+        return new ArrayList<>();
+    }
+
+
+
 
 }

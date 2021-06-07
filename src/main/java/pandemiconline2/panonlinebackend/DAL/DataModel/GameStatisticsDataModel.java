@@ -32,7 +32,4 @@ public class GameStatisticsDataModel implements Serializable
 
 
 
-//    @ManyToOne
-//    @JoinColumn
-//    private UserDataModel GamePlayedUser;
 }
