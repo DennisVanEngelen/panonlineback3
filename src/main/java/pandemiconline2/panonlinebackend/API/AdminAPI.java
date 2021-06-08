@@ -1,6 +1,5 @@
 package pandemiconline2.panonlinebackend.API;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pandemiconline2.panonlinebackend.API.ViewModel.UserViewModel;
 import pandemiconline2.panonlinebackend.DAL.DTO.UserDTO;
@@ -13,14 +12,13 @@ import pandemiconline2.panonlinebackend.Logic.Models.User;
 import java.util.List;
 
 @RestController
-@RequestMapping("AdminApi")
+@RequestMapping("api/Admin")
 @CrossOrigin
 public class AdminAPI
 {
     UserContainer userContainer;
-    @Autowired
-    public AdminAPI(UserContainer container){
-        this.userContainer = container;
+    public AdminAPI(){
+        this.userContainer = new UserContainer(new UserDAL());
     }
 
     @PutMapping(value="/update", consumes="application/json")
@@ -34,7 +32,7 @@ public class AdminAPI
             return false;
         }
     }
-    @DeleteMapping (value ="deleteUser",consumes = "application/json", produces = "application/json")
+    @DeleteMapping (value ="/deleteUser",consumes = "application/json", produces = "application/json")
     public void DeleteUser(@RequestBody UserViewModel model)
     {
         User user = new User(model);

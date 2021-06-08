@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
-    <persistence-unit name="panonlineBack">
+    <persistence-unit name="PandemicOnline">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServer2012Dialect"/>

@@ -10,10 +10,8 @@ import pandemiconline2.panonlinebackend.Logic.Models.User;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class UserContainer {
     IUserContainer iUserContainer;
-
     public UserContainer(IUserContainer container)
     {
         this.iUserContainer = container;

@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("UserApi")
+@RequestMapping("api/User")
 @CrossOrigin
 public class UserAPI {
 
     private final UserContainer userContainer;
-    @Autowired
-    public UserAPI(UserContainer container){
-        this.userContainer = container;
+
+    public UserAPI(){
+        this.userContainer = new UserContainer(new UserDAL());
     }
 
     @PostMapping(value= "/post", consumes = "application/json", produces = "application/json")
