@@ -22,9 +22,5 @@ public class GameStatistics
         this.victorious = statisticsDTO.isVictorious();
         this.diseasesCured = statisticsDTO.getDiseasesCured();
         this.movesMade = statisticsDTO.getMovesMade();
-        for (UserDTO user :statisticsDTO.getPlayers())
-        {
-            players.add(new User(user));
-        }
     }
 }

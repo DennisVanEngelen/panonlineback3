@@ -2,6 +2,7 @@ package pandemiconline2.panonlinebackend.DAL.DataModels;
 
 import lombok.Getter;
 import lombok.Setter;
+import pandemiconline2.panonlinebackend.DAL.DTO.AdminDTO;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,4 +21,10 @@ public class AdminDataModel implements Serializable
 
     @Column(nullable = false)
     private String password;
+
+    public AdminDataModel() {}
+    public AdminDataModel(AdminDTO adminDTO){
+        this.username = adminDTO.getUsername();
+        this.password = adminDTO.getPassword();
+    }
 }

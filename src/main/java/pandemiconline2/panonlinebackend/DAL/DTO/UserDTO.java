@@ -6,7 +6,9 @@ import pandemiconline2.panonlinebackend.DAL.DataModels.GameStatisticsDataModel;
 import pandemiconline2.panonlinebackend.DAL.DataModels.UserDataModel;
 import pandemiconline2.panonlinebackend.Logic.Models.User;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter @Setter
@@ -16,7 +18,7 @@ public class UserDTO
     private String username;
     private String password;
     private String emailAddress;
-    private Set<GameStatisticsDTO> gamesPlayed = new HashSet<>();
+    private List<GameStatisticsDTO> gamesPlayed = new ArrayList<>();
 
     public UserDTO(){
 

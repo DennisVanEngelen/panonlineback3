@@ -1,6 +1,9 @@
 package pandemiconline2.panonlinebackend.DAL;
 
+import pandemiconline2.panonlinebackend.DAL.DTO.GameStatisticsDTO;
 import pandemiconline2.panonlinebackend.DAL.DTO.UserDTO;
+import pandemiconline2.panonlinebackend.DAL.DataModels.AdminDataModel;
+import pandemiconline2.panonlinebackend.DAL.DataModels.GameStatisticsDataModel;
 import pandemiconline2.panonlinebackend.DAL.DataModels.UserDataModel;
 import pandemiconline2.panonlinebackend.DAL.Interface.IUser;
 import pandemiconline2.panonlinebackend.DAL.Interface.IUserContainer;
@@ -15,13 +18,12 @@ import java.util.List;
 
 public class UserDAL implements IUser, IUserContainer
 {
-    EntityManagerFactory entityManagerFactory;
+    EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("PandemicOnline");
     EntityTransaction entityTransaction;
     private EntityManager entityManager;
 
 
     public UserDTO LoginUser(String username, String password){
-        entityManagerFactory =  Persistence.createEntityManagerFactory("PandemicOnline");
         entityManager  = entityManagerFactory.createEntityManager();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<UserDataModel> query = builder.createQuery(UserDataModel.class);
@@ -80,13 +82,13 @@ public class UserDAL implements IUser, IUserContainer
     }
     public void SaveUser(UserDTO userDTO)
     {
-        entityManagerFactory =  Persistence.createEntityManagerFactory("PandemicOnline");
         entityManager = entityManagerFactory.createEntityManager();
         try
         {
             entityTransaction = entityManager.getTransaction();
             entityTransaction.begin();
-            entityManager.persist(new UserDataModel(userDTO));
+            UserDataModel userDataModel = new UserDataModel(userDTO);
+            entityManager.persist(userDataModel);
             entityTransaction.commit();
         }
         catch(Exception ex)
@@ -132,6 +134,28 @@ public class UserDAL implements IUser, IUserContainer
                 entityManager.close();
             }
             entityTransaction = null;
+        }
+    }
+    public GameStatisticsDTO GetGameStatistics(long id){
+        entityManager  = entityManagerFactory.createEntityManager();
+
+        try
+        {
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            return new GameStatisticsDTO(entityManager.find(GameStatisticsDataModel.class, id));
+        }
+        catch (NoResultException ex)
+        {
+            System.out.println("ex");
+            return null;
+        }
+        finally
+        {
+            if(entityManager.isOpen())
+            {
+                entityManager.close();
+            }
         }
     }
     public void DeleteUser(long userID){

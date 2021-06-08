@@ -1,8 +1,9 @@
 package pandemiconline2.panonlinebackend.DAL.DTO;
 
 import lombok.Getter;
+import lombok.Setter;
 import pandemiconline2.panonlinebackend.DAL.DataModels.AdminDataModel;
-@Getter
+@Getter@Setter
 public class AdminDTO
 {
     long id;
@@ -15,4 +16,5 @@ public class AdminDTO
         this.password = adminDataModel.getPassword();
         this.id = adminDataModel.getId();
     }
+    public AdminDTO(){}
 }

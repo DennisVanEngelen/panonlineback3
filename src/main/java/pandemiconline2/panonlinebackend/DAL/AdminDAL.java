@@ -2,6 +2,7 @@ package pandemiconline2.panonlinebackend.DAL;
 
 import pandemiconline2.panonlinebackend.DAL.DTO.AdminDTO;
 import pandemiconline2.panonlinebackend.DAL.DataModels.AdminDataModel;
+import pandemiconline2.panonlinebackend.DAL.DataModels.UserDataModel;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -55,4 +56,29 @@ public class AdminDAL
         }
         return dto;
     }
+
+    public void SaveAdmin(AdminDTO adminDTO){
+        entityManagerFactory =  Persistence.createEntityManagerFactory("PandemicOnline");
+        entityManager = entityManagerFactory.createEntityManager();
+        try
+        {
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            entityManager.persist(new AdminDataModel(adminDTO));
+            entityTransaction.commit();
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            entityTransaction.rollback();
+        }
+        finally
+        {
+            if(entityManager.isOpen())
+            {
+                entityManager.close();
+            }
+            entityTransaction = null;
+        }
+}
 }

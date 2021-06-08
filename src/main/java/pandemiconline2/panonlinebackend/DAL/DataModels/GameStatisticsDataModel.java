@@ -2,10 +2,13 @@ package pandemiconline2.panonlinebackend.DAL.DataModels;
 
 import lombok.Getter;
 import lombok.Setter;
+import pandemiconline2.panonlinebackend.DAL.DTO.GameStatisticsDTO;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity @Getter @Setter
@@ -25,9 +28,15 @@ public class GameStatisticsDataModel implements Serializable
     @Column
     private int movesMade;
 
-    @ManyToMany(mappedBy = "gamesPlayed")
-    private Set<UserDataModel> players = new HashSet<UserDataModel>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = true, updatable = false, referencedColumnName = "id")
+    private UserDataModel user;
 
+public GameStatisticsDataModel(){}
 
-
+public GameStatisticsDataModel(GameStatisticsDTO dto){
+    this.victorious = dto.isVictorious();
+    this.movesMade = dto.getMovesMade();
+    this.diseasesCured = dto.getDiseasesCured();
+}
 }
