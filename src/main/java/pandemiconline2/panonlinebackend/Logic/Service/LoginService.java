@@ -29,7 +29,9 @@ public class LoginService
         adminDAL = new AdminDAL();
         try
         {
-            return new Admin(adminDAL.LoginAdmin(info.getUsername(), info.getPassword()));
+            Admin admin = new Admin(adminDAL.LoginAdmin(info.getUsername(), info.getPassword()));
+            admin.getUsername();
+            return admin;
         }
         catch (Exception ex){
             return null;

@@ -1,9 +1,7 @@
 package pandemiconline2.panonlinebackend.DAL;
 
 import pandemiconline2.panonlinebackend.DAL.DTO.AdminDTO;
-import pandemiconline2.panonlinebackend.DAL.DTO.UserDTO;
-import pandemiconline2.panonlinebackend.DAL.DataModel.AdminDataModel;
-import pandemiconline2.panonlinebackend.DAL.DataModel.UserDataModel;
+import pandemiconline2.panonlinebackend.DAL.DataModels.AdminDataModel;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -19,15 +17,16 @@ public class AdminDAL
 
 
     public AdminDTO LoginAdmin(String username, String password){
-        entityManager  = entityManagerFactory.createEntityManager();
+        AdminDTO dto;
+        entityManager = entityManagerFactory.createEntityManager();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<AdminDataModel> query = builder.createQuery(AdminDataModel.class);
         Root<AdminDataModel> root = query.from(AdminDataModel.class);
 
         Predicate predicateUsername
-                = builder.like(root.get("Username"), username);
+                = builder.like(root.get("username"), username);
         Predicate predicatePassword
-                = builder.like(root.get("Password"), password);
+                = builder.like(root.get("password"), password);
         Predicate predicateLogIn
                 = builder.and(predicateUsername, predicatePassword);
 
@@ -37,7 +36,9 @@ public class AdminDAL
         {
             entityTransaction = entityManager.getTransaction();
             entityTransaction.begin();
-            return new AdminDTO(entityManager.createQuery(query).getSingleResult());
+            AdminDataModel dataModel = entityManager.createQuery(query).getSingleResult();
+            entityTransaction.commit();
+            dto = new AdminDTO(dataModel);
         }
         catch (NoResultException ex)
         {
@@ -52,5 +53,6 @@ public class AdminDAL
             }
             entityTransaction = null;
         }
+        return dto;
     }
 }

@@ -8,9 +8,13 @@ import pandemiconline2.panonlinebackend.DAL.DTO.AdminDTO;
 public class Admin
 {
     private long id;
-    private String Username;
-    private String Password;
+    private String username;
+    private String password;
+
     public Admin(AdminDTO dto){
+        username = dto.getUsername();
+        password = dto.getPassword();
+        id = dto.getId();
 
     }
 }

@@ -2,9 +2,8 @@ package pandemiconline2.panonlinebackend.DAL.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
-import pandemiconline2.panonlinebackend.DAL.DataModel.GameStatisticsDataModel;
-import pandemiconline2.panonlinebackend.DAL.DataModel.UserDataModel;
+import pandemiconline2.panonlinebackend.DAL.DataModels.GameStatisticsDataModel;
+import pandemiconline2.panonlinebackend.DAL.DataModels.UserDataModel;
 import pandemiconline2.panonlinebackend.Logic.Models.User;
 
 import java.util.HashSet;
@@ -19,6 +18,9 @@ public class UserDTO
     private String emailAddress;
     private Set<GameStatisticsDTO> gamesPlayed = new HashSet<>();
 
+    public UserDTO(){
+
+    }
     public UserDTO (User user)
     {
         this.id = user.getId();
