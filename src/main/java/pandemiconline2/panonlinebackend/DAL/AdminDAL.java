@@ -3,6 +3,7 @@ package pandemiconline2.panonlinebackend.DAL;
 import pandemiconline2.panonlinebackend.DAL.DTO.AdminDTO;
 import pandemiconline2.panonlinebackend.DAL.DataModels.AdminDataModel;
 import pandemiconline2.panonlinebackend.DAL.DataModels.UserDataModel;
+import pandemiconline2.panonlinebackend.DAL.Interface.IAdmin;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -10,7 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-public class AdminDAL
+public class AdminDAL implements IAdmin
 {
     static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("PandemicOnline");
     EntityTransaction entityTransaction;

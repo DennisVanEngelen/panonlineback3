@@ -7,33 +7,36 @@ import lombok.Getter;
 import lombok.Setter;
 import pandemiconline2.panonlinebackend.DAL.Interface.IUser;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Getter
-@Setter
+@Getter @Setter
 public class User
 {
     private long id;
     private String Username;
     private String Password;
     private String EmailAddress;
-    private Set<GameStatistics> gameStatistics = new HashSet<>();
+    private List<GameStatistics> gameStatistics = new ArrayList<>();
 
     //Converters
 
     //Constructors
     public User(UserDTO user)
     {
-        id = user.getId();
-        Username = user.getUsername();
-        EmailAddress = user.getEmailAddress();
-        if (user.getGamesPlayed() !=null)
+        if (user != null)
         {
-            for (GameStatisticsDTO gamestats : user.getGamesPlayed())
+            id = user.getId();
+            Username = user.getUsername();
+            EmailAddress = user.getEmailAddress();
+            if (user.getGamesPlayed() != null)
             {
-                gameStatistics.add(new GameStatistics(gamestats));
+                for (GameStatisticsDTO gamestats : user.getGamesPlayed())
+                {
+                    gameStatistics.add(new GameStatistics(gamestats));
+                }
             }
         }
     }
@@ -48,6 +51,7 @@ public class User
     public void AddUser(IUser dal){
         dal.SaveUser(new UserDTO(this));
     }
+
     public void UpdateUser(IUser dal){
         dal.UpdateUser(new UserDTO(this));
 

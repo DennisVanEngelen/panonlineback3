@@ -8,4 +8,5 @@ public interface IUser
     void SaveUser(UserDTO userDTO);
     void DeleteUser(long userID);
     void UpdateUser(UserDTO userDTO);
+    UserDTO LoginUser(String username, String password);
 }

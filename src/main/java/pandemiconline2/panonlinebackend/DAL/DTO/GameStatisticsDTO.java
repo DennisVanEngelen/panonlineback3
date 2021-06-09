@@ -36,4 +36,11 @@ public class GameStatisticsDTO
         this.movesMade = model.getMovesMade();
     }
     public GameStatisticsDTO(){}
+
+    public GameStatisticsDTO(long id, boolean victorious, int cured, int moves){
+        this.ID = id;
+        this.victorious = victorious;
+        this.diseasesCured=cured;
+        this.movesMade = moves;
+    }
 }

@@ -44,5 +44,13 @@ public class UserDTO
             }
         }
     }
+
+    public UserDTO(long id, String username, String password, String email, List<GameStatisticsDTO> stats){
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.emailAddress = email;
+        this.gamesPlayed = stats;
+    }
 }
 

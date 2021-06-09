@@ -18,7 +18,12 @@ public class UserContainer {
     }
 
     public User GetUser(long userID){
-        return new User(iUserContainer.GetUser(userID));
+
+        User user = new User(iUserContainer.GetUser(userID));
+        if(user.getEmailAddress() != null){
+            return user;
+        }
+        return null;
     }
     public List<User> GetAllUsers()
     {
