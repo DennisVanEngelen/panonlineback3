@@ -32,9 +32,10 @@ public class UserTestRepo implements IUser, IUserContainer
         return null;
     }
 
-    public void SaveUser(UserDTO userDTO)
+    public boolean SaveUser(UserDTO userDTO)
     {
         users.add(userDTO);
+        return true;
     }
 
 

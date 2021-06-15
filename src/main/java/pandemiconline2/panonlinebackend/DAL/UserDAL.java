@@ -30,9 +30,9 @@ public class UserDAL implements IUser, IUserContainer
         Root<UserDataModel> root = query.from(UserDataModel.class);
 
         Predicate predicateUsername
-                = builder.like(root.get("Username"), username);
+                = builder.like(root.get("username"), username);
         Predicate predicatePassword
-                = builder.like(root.get("Password"), password);
+                = builder.like(root.get("password"), password);
         Predicate predicateLogIn
                 = builder.and(predicateUsername, predicatePassword);
 
@@ -80,7 +80,7 @@ public class UserDAL implements IUser, IUserContainer
         }
 
     }
-    public void SaveUser(UserDTO userDTO)
+    public boolean SaveUser(UserDTO userDTO)
     {
         entityManager = entityManagerFactory.createEntityManager();
         try
@@ -90,11 +90,13 @@ public class UserDAL implements IUser, IUserContainer
             UserDataModel userDataModel = new UserDataModel(userDTO);
             entityManager.persist(userDataModel);
             entityTransaction.commit();
+            return true;
         }
         catch(Exception ex)
         {
             ex.printStackTrace();
             entityTransaction.rollback();
+            return false;
         }
         finally
         {

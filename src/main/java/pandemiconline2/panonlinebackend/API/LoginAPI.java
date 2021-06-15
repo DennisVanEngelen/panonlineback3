@@ -10,11 +10,13 @@ import pandemiconline2.panonlinebackend.Logic.Models.Admin;
 import pandemiconline2.panonlinebackend.Logic.Models.User;
 import pandemiconline2.panonlinebackend.Logic.Service.LoginService;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping("api/Login")
+@RequestMapping("login")
 @CrossOrigin
 public class LoginAPI
 {
@@ -24,25 +26,29 @@ public class LoginAPI
         loginService = _loginService;
     }
 
-    @PostMapping(value="/userLogin", consumes = "application/json", produces = "application/json")
-    public String UserLogin(@RequestBody UserLoginViewModel info, HttpServletRequest request){
-//        HttpSession session = request.getSession();
+    @PostMapping(value="/u", consumes = "application/json", produces = "application/json")
+    public boolean UserLogin(@RequestBody UserLoginViewModel info, HttpServletRequest request, HttpServletResponse response){
+        HttpSession session = request.getSession();
         User user = loginService.UserLogin(info, new UserDAL());
-//        session.setAttribute("patientId", user.getId());
-//        return session.getId();
-        return "Hello";
+        if(user.getUsername()!=null)
+        {
+            session.setAttribute("user", user.getId());
+            return true;
+        }
+        return false;
+
     }
 
-    @PostMapping(value="/adminLogin", consumes = "application/json", produces = "application/json")
-    public AdminViewModel AdminLogin(@RequestBody AdminLoginViewModel info){
-//        HttpSession session = request.getSession();
-       Admin admin = loginService.AdminLogin(info,new AdminDAL());
-//        session.setAttribute("patientId", admin.getId());
-//        return session.getId();
-        AdminViewModel model = new AdminViewModel();
-        model.setPassword(admin.getPassword());
-        model.setUsername(admin.getUsername());
-        return model;
+    @PostMapping(value="/a", consumes = "application/json", produces = "application/json")
+    public boolean AdminLogin(@RequestBody AdminLoginViewModel info, HttpServletRequest request, HttpServletResponse response)   {
+        HttpSession session = request.getSession();
+        Admin admin = loginService.AdminLogin(info,new AdminDAL());
+        if(admin.getUsername()!=null){
+            session.setAttribute("admin", admin.getId());
+
+            return true;
+        }
+        return false;
     }
 
 }

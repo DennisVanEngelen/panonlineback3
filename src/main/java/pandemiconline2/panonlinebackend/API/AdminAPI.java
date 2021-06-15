@@ -12,7 +12,7 @@ import pandemiconline2.panonlinebackend.Logic.Models.User;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/Admin")
+@RequestMapping("admin")
 @CrossOrigin
 public class AdminAPI
 {
@@ -21,7 +21,7 @@ public class AdminAPI
         this.userContainer = new UserContainer(new UserDAL());
     }
 
-    @PutMapping(value="/update", consumes="application/json")
+    @PutMapping(value="/u", consumes="application/json")
     public boolean UpdateUser(@RequestBody UserViewModel model){
         try{
             User user = new User(model);
@@ -32,18 +32,18 @@ public class AdminAPI
             return false;
         }
     }
-    @DeleteMapping (value ="/deleteUser",consumes = "application/json", produces = "application/json")
+    @DeleteMapping (value ="/u",consumes = "application/json", produces = "application/json")
     public void DeleteUser(@RequestBody UserViewModel model)
     {
         User user = new User(model);
         user.DeleteUser(new UserDAL());
     }
-    @GetMapping("/getUser")
+    @GetMapping("/g")
     public User GetUser(long id){
         return userContainer.GetUser(id);
     }
 
-    @GetMapping("/getAllUsers")
+    @GetMapping("/ga")
     public List<User> GetAllUsers()
     {
         return userContainer.GetAllUsers();

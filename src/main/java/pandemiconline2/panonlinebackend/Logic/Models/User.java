@@ -1,5 +1,6 @@
 package pandemiconline2.panonlinebackend.Logic.Models;
 
+import pandemiconline2.panonlinebackend.API.ViewModel.UserRegisterViewModel;
 import pandemiconline2.panonlinebackend.DAL.DTO.GameStatisticsDTO;
 import pandemiconline2.panonlinebackend.DAL.DTO.UserDTO;
 import  pandemiconline2.panonlinebackend.API.ViewModel.UserViewModel;
@@ -47,9 +48,16 @@ public class User
         Username = user.getUsername();
         EmailAddress = user.getEmailAddress();
     }
+    public User(UserRegisterViewModel user)
+    {
+        Username = user.getUsername();
+        Password = user.getPassword();
+        EmailAddress = user.getEmailadress();
+    }
 
-    public void AddUser(IUser dal){
-        dal.SaveUser(new UserDTO(this));
+    public boolean AddUser(IUser dal){
+        return dal.SaveUser(new UserDTO(this));
+
     }
 
     public void UpdateUser(IUser dal){

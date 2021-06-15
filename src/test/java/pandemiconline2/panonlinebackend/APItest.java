@@ -20,14 +20,6 @@ public class APItest
     @Test
     void testAdminLogin()
     {
-        LoginAPI api = new LoginAPI(new LoginService());
-        AdminLoginViewModel model = new AdminLoginViewModel();
-        model.setPassword("test123");
-
-        model.setUsername("test");
-        AdminViewModel viewmodel = api.AdminLogin(model);
-
-        Assertions.assertTrue(viewmodel.getUsername().equals("test"));
 
     }
 
