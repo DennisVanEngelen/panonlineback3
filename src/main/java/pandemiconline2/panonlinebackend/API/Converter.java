@@ -8,15 +8,15 @@ import java.util.List;
 
 public class Converter
 {
-    public List<UserViewModel> UserListToViewModels(List<User> users){
-        List<UserViewModel> models = new ArrayList<>();
+    public List<String> UserListToViewModels(List<User> users){
+        List<String> usernames = new ArrayList<>();
         for (User user:users
              )
         {
             UserViewModel model = new UserViewModel();
             model.setUsername(user.getUsername());
-            models.add(model);
+            usernames.add(model.getUsername());
         }
-        return models;
+        return usernames;
     }
 }

@@ -26,29 +26,25 @@ public class LoginAPI
         loginService = _loginService;
     }
 
-    @PostMapping(value="/u", consumes = "application/json", produces = "application/json")
-    public boolean UserLogin(@RequestBody UserLoginViewModel info, HttpServletRequest request, HttpServletResponse response){
-        HttpSession session = request.getSession();
+    @PostMapping(value="/user", consumes = "application/json")
+    public long UserLogin(@RequestBody UserLoginViewModel info){
+
         User user = loginService.UserLogin(info, new UserDAL());
         if(user.getUsername()!=null)
         {
-            session.setAttribute("user", user.getId());
-            return true;
+            return user.getId();
         }
-        return false;
-
+        return 0;
     }
 
-    @PostMapping(value="/a", consumes = "application/json", produces = "application/json")
-    public boolean AdminLogin(@RequestBody AdminLoginViewModel info, HttpServletRequest request, HttpServletResponse response)   {
-        HttpSession session = request.getSession();
+    @PostMapping(value="/admin", consumes = "application/json")
+    public long AdminLogin(@RequestBody AdminLoginViewModel info)   {
         Admin admin = loginService.AdminLogin(info,new AdminDAL());
         if(admin.getUsername()!=null){
-            session.setAttribute("admin", admin.getId());
 
-            return true;
+            return admin.getId();
         }
-        return false;
+        return 0;
     }
 
 }

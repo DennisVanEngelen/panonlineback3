@@ -8,7 +8,7 @@ import java.util.List;
 @Getter @Setter
 public class UserViewModel
 {
-    private long ID;
-    private String Username;
-    private String EmailAddress;
+    private long userid;
+    private String username;
+    private String email;
 }

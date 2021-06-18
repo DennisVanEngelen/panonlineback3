@@ -7,6 +7,7 @@ import pandemiconline2.panonlinebackend.DAL.DataModels.GameStatisticsDataModel;
 import pandemiconline2.panonlinebackend.DAL.DataModels.UserDataModel;
 import pandemiconline2.panonlinebackend.DAL.Interface.IUser;
 import pandemiconline2.panonlinebackend.DAL.Interface.IUserContainer;
+import pandemiconline2.panonlinebackend.Logic.Models.User;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -120,6 +121,7 @@ public class UserDAL implements IUser, IUserContainer
             {
                 user.getGamesPlayed().clear();
             }
+            userDTO.setPassword(user.getPassword());
             user = new UserDataModel(userDTO);
             entityManager.merge(user);
             entityTransaction.commit();
@@ -187,7 +189,29 @@ public class UserDAL implements IUser, IUserContainer
     }
 
     public List<UserDTO> GetAllUsers(){
-        return new ArrayList<>();
+
+            entityManager = entityManagerFactory.createEntityManager();
+            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<UserDataModel> query = builder.createQuery(UserDataModel.class);
+            Root<UserDataModel> root = query.from(UserDataModel.class);
+            query.select(root);
+            Converter converter = new Converter();
+            try
+            {
+                return converter.convertUserDataModelToDTO(entityManager.createQuery(query).getResultList());
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            finally
+            {
+                if(entityManager.isOpen())
+                {
+                    entityManager.close();
+                }
+            }
+
     }
 
 

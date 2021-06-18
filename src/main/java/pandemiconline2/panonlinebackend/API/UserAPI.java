@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("api")
 @CrossOrigin
 public class UserAPI {
 
@@ -24,7 +24,7 @@ public class UserAPI {
         this.userContainer = new UserContainer(new UserDAL());
     }
 
-    @PostMapping(value= "/", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "user", consumes = "application/json")
     public String AddUser(@RequestBody UserRegisterViewModel model) {
 
             User user = new User(model);
@@ -34,7 +34,7 @@ public class UserAPI {
             return "Oops er is iets foutgegaan!";
     }
 
-    @PutMapping(value="/", consumes="application/json", produces = "application/json")
+    @PutMapping(value = "user", consumes="application/json")
     public String UpdateUser(@RequestBody UserViewModel model){
         try{
             User user = new User(model);
@@ -47,11 +47,10 @@ public class UserAPI {
         }
     }
 
-    @GetMapping(value ="/", produces = "application/json")
-    public User GetUser(UserViewModel model, HttpServletRequest request)
-
+    @GetMapping(value ="user/{id}", produces = "application/json")
+    public User GetUser(@PathVariable int id)
     {
-        User user = userContainer.GetUser((long)request.getSession().getAttribute("user"));
+        User user = userContainer.GetUser((long)id);
         user.getId();
         return user;
     }

@@ -9,10 +9,11 @@ import pandemiconline2.panonlinebackend.Logic.Containers.UserContainer;
 import pandemiconline2.panonlinebackend.Logic.Models.Admin;
 import pandemiconline2.panonlinebackend.Logic.Models.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("admin")
+@RequestMapping("adminapi")
 @CrossOrigin
 public class AdminAPI
 {
@@ -21,7 +22,7 @@ public class AdminAPI
         this.userContainer = new UserContainer(new UserDAL());
     }
 
-    @PutMapping(value="/u", consumes="application/json")
+    @PutMapping(value="/user", consumes="application/json")
     public boolean UpdateUser(@RequestBody UserViewModel model){
         try{
             User user = new User(model);
@@ -32,21 +33,33 @@ public class AdminAPI
             return false;
         }
     }
-    @DeleteMapping (value ="/u",consumes = "application/json", produces = "application/json")
-    public void DeleteUser(@RequestBody UserViewModel model)
+    @DeleteMapping (value ="/user/{id}")
+    public void DeleteUser(@PathVariable int id)
     {
-        User user = new User(model);
+        User user = new User(id);
         user.DeleteUser(new UserDAL());
     }
-    @GetMapping("/g")
-    public User GetUser(long id){
+    @GetMapping("/user/{id}")
+    public User GetUser(@PathVariable int id){
         return userContainer.GetUser(id);
     }
 
-    @GetMapping("/ga")
-    public List<User> GetAllUsers()
+    @GetMapping(value = "/user", produces = "application/json")
+    public List<UserViewModel> GetAllUsers()
     {
-        return userContainer.GetAllUsers();
+        List<UserViewModel> models = new ArrayList<>();
+        List<User> users= userContainer.GetAllUsers();
+        for (User user: users
+             )
+        {
+            UserViewModel model = new UserViewModel();
+            model.setUserid(user.getId());
+            model.setUsername(user.getUsername());
+            model.setEmail(user.getEmailAddress());
+            models.add(model);
+        }
+        return models;
+
     }
 
 }

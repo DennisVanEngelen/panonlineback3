@@ -19,7 +19,7 @@ public class UserDataModel implements Serializable
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(updatable = false, nullable = false)
-        private Long id;
+        private long id;
 
         @Column(unique = true, nullable = false)
         private String username;
@@ -37,6 +37,11 @@ public class UserDataModel implements Serializable
 
         public UserDataModel(UserDTO user)
         {
+
+            if(user.getId() != 0)
+            {
+                id = user.getId();
+            }
             username = user.getUsername();
             password = user.getPassword();
             email_address = user.getEmailAddress();

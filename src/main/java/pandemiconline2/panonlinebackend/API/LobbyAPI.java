@@ -1,6 +1,7 @@
 package pandemiconline2.panonlinebackend.API;
 
 import org.springframework.web.bind.annotation.*;
+import pandemiconline2.panonlinebackend.API.ViewModel.LobbyAccessModel;
 import pandemiconline2.panonlinebackend.API.ViewModel.LobbyViewModel;
 import pandemiconline2.panonlinebackend.API.ViewModel.UserRegisterViewModel;
 import pandemiconline2.panonlinebackend.API.ViewModel.UserViewModel;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("lobby")
+@RequestMapping("api")
 @CrossOrigin
 public class LobbyAPI {
 
@@ -25,19 +26,24 @@ public class LobbyAPI {
         this.lobbyContainer = new LobbyContainer();
     }
 
-    @PostMapping(value= "/", consumes = "application/json", produces = "application/json")
-    public boolean JoinLobby(@RequestBody UserRegisterViewModel model) {
+    @PostMapping(value= "/lobby/{id}", consumes = "application/json")
+    public String JoinLobby(@RequestBody LobbyAccessModel model ,@PathVariable int id) {
 
-    return true;
+        if (lobbyContainer.JoinLobby(new User(model.getUsername()), id)){
+            return "joined lobby";
+        }
+        return "couldnt join lobby";
     }
 
-    @PutMapping(value="/", consumes="application/json", produces = "application/json")
-    public boolean LeaveLobby(@RequestBody UserViewModel model){
-        return true;
+    @PutMapping(value="/leave{id}", consumes="application/json")
+    public String LeaveLobby(@RequestBody LobbyAccessModel model, @PathVariable int id){
+        lobbyContainer.LeaveLobby(new User(model.getUsername()),id);
+        return "Left lobby";
+
     }
 
-    @GetMapping(value ="/", consumes = "application/json", produces = "application/json")
-    public List<LobbyViewModel> GetLobbies( HttpServletRequest request)
+    @GetMapping(value ="/lobby", produces = "application/json")
+    public List<LobbyViewModel> GetLobbies()
 
     {
         Converter converter = new Converter();
@@ -48,6 +54,7 @@ public class LobbyAPI {
             LobbyViewModel model = new LobbyViewModel();
             model.setLobbynumber(lobby.getLobbyNumber());
             model.setUsers(converter.UserListToViewModels(lobby.getUsers()));
+            lobbies.add(model);
         }
         return lobbies;
     }

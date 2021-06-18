@@ -42,6 +42,18 @@ public class LobbyContainer
         }
         return false;
     }
+
+    public void LeaveLobby(User user, int lobbynumber){
+        for (Lobby lobby: lobbies)
+        {
+            if(lobby.getLobbyNumber() == lobbynumber ){
+                if(lobby.getUsers().size() < 4){
+                    lobby.LeaveLobby(user);
+
+                }
+            }
+        }
+    }
     public List<Lobby> GetAllLobbies(){
         return lobbies;
     }

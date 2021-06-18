@@ -8,6 +8,6 @@ import java.util.List;
 @Setter
 public class LobbyViewModel
 {
-    List<UserViewModel> users;
+    List<String> users;
     int lobbynumber;
 }

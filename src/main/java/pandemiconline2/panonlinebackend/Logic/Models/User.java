@@ -44,15 +44,23 @@ public class User
 
     public User(UserViewModel user)
     {
-        id = user.getID();
+        id = user.getUserid();
         Username = user.getUsername();
-        EmailAddress = user.getEmailAddress();
+        EmailAddress = user.getEmail();
+    }
+
+    public User(long id){
+        this.id = id;
     }
     public User(UserRegisterViewModel user)
     {
         Username = user.getUsername();
         Password = user.getPassword();
         EmailAddress = user.getEmailadress();
+    }
+
+    public User(String username){
+        Username = username;
     }
 
     public boolean AddUser(IUser dal){
@@ -64,7 +72,6 @@ public class User
         dal.UpdateUser(new UserDTO(this));
 
     }
-
     public void DeleteUser(IUser dal){
         dal.DeleteUser(this.id);
     }
